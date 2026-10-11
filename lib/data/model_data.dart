@@ -54,7 +54,7 @@ const facebookUrl = 'https://www.facebook.com/share/19k3zrJ2Es/'; //mon fb
 const tiktokUrl = 'https://www.tiktok.com/@sam.22.oll?_r=1&_t=ZS-99zWuLUJNw2'; //mon tiktok
 const pinterestUrl = 'https://pin.it/c3h7pl1fv'; //mon Pin
 
-const heroPhoto = 'assets/images/Digits04.jpg';
+const heroPhoto = 'assets/images/meEditorial12.jpg';
 const aboutPhoto = 'assets/images/Digits01.jpg';
 
 class Photo {

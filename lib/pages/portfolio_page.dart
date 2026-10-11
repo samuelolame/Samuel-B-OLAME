@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:model_me/lang.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:model_me/constants.dart';
@@ -37,6 +38,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final columns = width < 600 ? 2:3;
     return ValueListenableBuilder<String>(
       valueListenable: lang,
       builder: (context, _, _) {
@@ -44,7 +47,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
           child: Column(
             children: [
               _hero(),
-              _portfolio(),
+              _portfolio(columns: columns),
               _stats(),
               _about(),
               _contact(),
@@ -255,7 +258,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
   }
 
   // ---------- Portfolio ----------
-  Widget _portfolio() {
+  Widget _portfolio({required int columns}) {
     final shown = filter == 'Tous'
         ? photos
         : photos.where((p) => p.category == filter).toList();
@@ -290,17 +293,20 @@ class _PortfolioPageState extends State<PortfolioPage> {
             ],
           ),
           const SizedBox(height: 32),
-          GridView.builder(
+          MasonryGridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: shown.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: d.columns,
-              mainAxisSpacing: 16,
-              crossAxisSpacing: 16,
-              childAspectRatio: 3 / 4,
-            ),
-            itemBuilder: (context, index) => MyBox(photo: shown[index]),
+            crossAxisCount:columns,
+            mainAxisSpacing: 16,
+            crossAxisSpacing: 16,
+            // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            //   crossAxisCount: 3,
+            //   mainAxisSpacing: 16,
+            //   crossAxisSpacing: 16,
+            //   childAspectRatio: 3 / 4,
+            // ),
+            itemBuilder: (context, index) => MyBox(photo: shown[index], photos: shown,),
           ),
         ],
       ),
